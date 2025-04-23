@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <title>Missão Drácula Modular</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div class="container">
+        <div id="intro">
+            <h1>Configurar Missão Contra o Drácula</h1>
+            <div class="intro-book">
+                <div class="page active">
+                    <h2>DRÁCULA SAIU DO TÚMULO</h2>
+                    <p>Grupo I</p>
+                    <p>O Conde Drácula é um vampiro.</p>
+                    <p>O Conde Drácula dorme em sua tumba.</p>
+                    <p>A tumba do Conde Drácula fica na Cripta do Castelo de Drácula.</p>
+                    <p>Você está em Londres, na Inglaterra.</p>
+                    <p>Não há voo direto da Inglaterra para a Transilvânia.</p>
+                    <p>Hoje é segunda-feira.</p>
+                    <p>O voo de Londres a Budapeste dura 5 horas.</p>
+                    <p>O próximo voo para Budapeste sai hoje às 18:00 horas.</p>
+                </div>
+        
+                <div class="page">
+                    <p>Só é possível matar um vampiro cravando uma estaca de carvalho, à luz do dia, em seu coração.</p>
+                    <p>Só é possível comprar estacas de carvalho na loja do aeroporto de Budapeste.</p>
+                    <p>Haverá um feriado local em Budapeste esta semana.</p>
+                    <p>O voo de Budapeste para a Transilvânia sai às 14:00 horas, de terças e quintas, e dura uma hora.</p>
+                    <p>A estação de trem mais próxima do Castelo de Drácula é Novahuny.</p>
+                    <p>O trem leva seis horas do aeroporto da Transilvânia para Novahuny e sai do aeroporto ao meio-dia, às segundas, quartas e sextas-feiras.</p>
+                    <p>A chave para a Cripta do Castelo de Drácula está pendurada num prego, na sacristia da paróquia de Novahuny, que fica ao lado da estação de trem.</p>
+                    <p>A paróquia de Novahuny fica aberta do nascer ao pôr do sol.</p>
+                    <p>Na Transilvânia, o sol nasce às 09:00 horas e se põe às 17:30 horas.</p>
+                    <p>O mais rápido que você pode ir da Paróquia ao Castelo é sete quilômetros por hora, porque é um terreno rochoso escarpado e você está carregando uma grande estaca de carvalho.</p>
+                </div>
+            </div>
+        
+            <div class="nav-buttons">
+                <button class="nav" onclick="mudarPagina(-1)">Página Anterior</button>
+                <button class="nav" onclick="mudarPagina(1)">Próxima Página</button>
+                <button onclick="iniciarMissao()" id="btnIniciarMissao" style="display: none;">🚀 Iniciar Missão</button>
+            </div>
+        </div>
+    
+        <div class="controls" id="controls" style="display: none;">
+          <label for="partidaDia">Dia de partida (da Inglaterra):</label>
+          <select id="partidaDia">
+            <option>segunda</option><option>terça</option><option>quarta</option>
+            <option>quinta</option><option>sexta</option><option>sábado</option><option>domingo</option>
+          </select>
+
+          <label for="vooLondresHora">Hora do voo Londres → Budapeste:</label>
+          <input type="time" id="vooLondresHora" value=""/>
+
+          <label for="duracaoVooLondres">Duração do voo (em horas):</label>
+          <input type="number" id="duracaoVooLondres" value="" min="1"/>
+
+          <label for="diasVooBudapesteTrans">Dias com voo Budapeste → Transilvânia:</label>
+          <input type="text" id="diasVooBudapesteTrans" value="" placeholder="terça,quinta" />
+
+          <label for="horaVooBudTrans">Hora do voo Budapeste → Transilvânia:</label>
+          <input type="time" id="horaVooBudTrans" value=""/>
+
+          <label for="diasTrem">Dias com trem para Novahuny:</label>
+          <input type="text" id="diasTrem" value="" placeholder="segunda,terça"/>
+
+          <label for="horaTrem">Hora do trem:</label>
+          <input type="time" id="horaTrem" value="" />
+
+          <label for="duracaoTrem">Duração do trem (em horas):</label>
+          <input type="number" id="duracaoTrem" value="" min="1"/>
+
+          <label for="nascerSol">Nascer do Sol na Transilvânia:</label>
+          <input type="time" id="nascerSol" value="" />
+
+          <label for="porSol">Pôr do Sol na Transilvânia:</label>
+          <input type="time" id="porSol" value="" />
+
+          <label for="velocidadeCaminhada">Velocidade da caminhada (km/h):</label>
+          <input type="number" id="velocidadeCaminhada" value="" placeholder="KM/H" />
+
+          <label for="distanciaCastelo">Distância até o castelo (km):</label>
+          <input type="number" id="distanciaCastelo" value="" placeholder="KM"/>
+          
+          <div class="nav-buttons">
+            <button onclick="voltarParaIntro()" id="btnVoltarFinal" style="margin-bottom: 1rem;">⬅ Voltar</button>
+            <button onclick="gerarMissao()" id="btnGerarMissao">Gerar Missão</button>
+          </div>
+          <pre id="resultado"></pre>
+        </div>
+
+    </div>
+
+  <script src="dracula.js"></script>
+</body>
+</html>

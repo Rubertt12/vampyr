@@ -1,0 +1,187 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Special+Elite&display=swap');
+
+body {
+  margin: 0;
+  padding: 2rem;
+  background: #2c1e1e url('https://www.transparenttextures.com/patterns/book-cover.png') repeat;
+  font-family: 'Special Elite', cursive;
+  color: #3b1e1e;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.intro-book {
+  margin-bottom: 20px;
+}
+
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+}
+
+.controls {
+  display: none;
+  margin-top: 20px;
+}
+
+.nav-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 20px;
+  }
+  
+  .nav-buttons button {
+    background: linear-gradient(145deg, #5a5aff, #7c7cff);
+    border: none;
+    color: white;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.3s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .nav-buttons button:hover {
+    transform: scale(1.05);
+    background: linear-gradient(145deg, #4848e0, #6868ff);
+  }
+  
+  .nav-buttons button:active {
+    transform: scale(0.98);
+  }
+  
+
+
+  .nav-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 20px;
+  }
+  
+  .nav-buttons button {
+    background: #660000;
+    border: none;
+    color: white;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  }
+  
+  .nav-buttons button:hover {
+    background: #660000;
+    transform: scale(1.05);
+  }
+  
+
+.container {
+  background: #fdf5e6 url('https://www.transparenttextures.com/patterns/paper-fibers.png') repeat;
+  border: 1px solid #a58b6f;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+  padding: 3rem;
+  max-width: 800px;
+  width: 100%;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.container::before {
+  content: '';
+  position: absolute;
+  left: 20px;
+  top: 0;
+  bottom: 0;
+  width: 20px;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent,
+    transparent 10px,
+    rgba(44, 30, 30, 0.1) 10px,
+    rgba(44, 30, 30, 0.1) 11px
+  );
+  border-right: 2px dashed #a58b6f;
+}
+
+h1 {
+  font-family: 'Cinzel', serif;
+  font-size: 2.3rem;
+  color: #660000;
+  text-align: center;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid #660000;
+  padding-bottom: 0.5rem;
+}
+
+label {
+  font-weight: bold;
+  display: block;
+  margin-top: 1.3rem;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 0.6rem;
+  margin-top: 0.3rem;
+  background: #fff8dc;
+  color: #2c1e1e;
+  border: 1px solid #a58b6f;
+  border-radius: 6px;
+  font-family: 'Special Elite', cursive;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: #660000;
+  box-shadow: 0 0 6px #66000088;
+}
+
+button {
+  margin-top: 2rem;
+  background: #660000;
+  color: #fff8dc;
+  border: none;
+  padding: 0.8rem;
+  border-radius: 6px;
+  font-family: 'Cinzel', serif;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background: #8b0000;
+}
+
+pre#resultado {
+  background: #fff8dc;
+  border: 1px solid #a58b6f;
+  border-left: 5px solid #660000;
+  padding: 1rem;
+  border-radius: 6px;
+  white-space: pre-wrap;
+  margin-top: 2rem;
+  font-family: 'Courier New', monospace;
+  color: #2c1e1e;
+  font-size: 0.95rem;
+}
+
+
+  
