@@ -1,100 +1,65 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <title>Missão Drácula Modular</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Controle de Finanças</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <div id="intro">
-            <h1>Configurar Missão Contra o Drácula</h1>
-            <div class="intro-book">
-                <div class="page active">
-                    <h2>DRÁCULA SAIU DO TÚMULO</h2>
-                    <p>Grupo I</p>
-                    <p>O Conde Drácula é um vampiro.</p>
-                    <p>O Conde Drácula dorme em sua tumba.</p>
-                    <p>A tumba do Conde Drácula fica na Cripta do Castelo de Drácula.</p>
-                    <p>Você está em Londres, na Inglaterra.</p>
-                    <p>Não há voo direto da Inglaterra para a Transilvânia.</p>
-                    <p>Hoje é segunda-feira.</p>
-                    <p>O voo de Londres a Budapeste dura 5 horas.</p>
-                    <p>O próximo voo para Budapeste sai hoje às 18:00 horas.</p>
-                </div>
+  <div class="container">
+    <h1>💰 Controle de Finanças</h1>
+
+    <section class="salarios">
+      <h2>Salário Quinzenal</h2>
+      <div>
+        <label>Dia 15: R$ <input type="number" id="salario15"></label>
+        <label>Dia 30: R$ <input type="number" id="salario30"></label>
         
-                <div class="page">
-                    <p>Só é possível matar um vampiro cravando uma estaca de carvalho, à luz do dia, em seu coração.</p>
-                    <p>Só é possível comprar estacas de carvalho na loja do aeroporto de Budapeste.</p>
-                    <p>Haverá um feriado local em Budapeste esta semana.</p>
-                    <p>O voo de Budapeste para a Transilvânia sai às 14:00 horas, de terças e quintas, e dura uma hora.</p>
-                    <p>A estação de trem mais próxima do Castelo de Drácula é Novahuny.</p>
-                    <p>O trem leva seis horas do aeroporto da Transilvânia para Novahuny e sai do aeroporto ao meio-dia, às segundas, quartas e sextas-feiras.</p>
-                    <p>A chave para a Cripta do Castelo de Drácula está pendurada num prego, na sacristia da paróquia de Novahuny, que fica ao lado da estação de trem.</p>
-                    <p>A paróquia de Novahuny fica aberta do nascer ao pôr do sol.</p>
-                    <p>Na Transilvânia, o sol nasce às 09:00 horas e se põe às 17:30 horas.</p>
-                    <p>O mais rápido que você pode ir da Paróquia ao Castelo é sete quilômetros por hora, porque é um terreno rochoso escarpado e você está carregando uma grande estaca de carvalho.</p>
-                </div>
-            </div>
-        
-            <div class="nav-buttons">
-                <button class="nav" onclick="mudarPagina(-1)">Página Anterior</button>
-                <button class="nav" onclick="mudarPagina(1)">Próxima Página</button>
-                <button onclick="iniciarMissao()">Iniciar Missão</button>
-            </div>
-        </div>
+        <button onclick="salvarSalarios()">Salvar Salários</button>
+      </div>
     
-        <div class="controls" id="controls">
-          <label for="partidaDia">Dia de partida (da Inglaterra):</label>
-          <select id="partidaDia">
-            <option>segunda</option><option>terça</option><option>quarta</option>
-            <option>quinta</option><option>sexta</option><option>sábado</option><option>domingo</option>
-          </select>
+      <!-- Lista para mostrar os salários -->
+      <ul id="listaSalarios"></ul>
 
-          <label for="vooLondresHora">Hora do voo Londres → Budapeste:</label>
-          <input type="time" id="vooLondresHora" value="18:00"/>
+    </section>
 
-          <label for="duracaoVooLondres">Duração do voo (em horas):</label>
-          <input type="number" id="duracaoVooLondres" value="5" min="1"/>
+    
 
-          <label for="diasVooBudapesteTrans">Dias com voo Budapeste → Transilvânia:</label>
-          <input type="text" id="diasVooBudapesteTrans" value="terça,quinta" placeholder="terça,quinta" />
+    <section class="extras">
+      <h2>Valores Extras</h2>
+      <input type="text" id="extraNome" placeholder="Descrição">
+      <input type="number" id="extraValor" placeholder="Valor (R$)">
+      <button onclick="adicionarExtra()">Adicionar Extra</button>
+      <ul id="listaExtras"></ul>
+    </section>
 
-          <label for="horaVooBudTrans">Hora do voo Budapeste → Transilvânia:</label>
-          <input type="time" id="horaVooBudTrans" value="14:00"/>
+    <section class="calendario">
+      <h2>Calendário</h2>
+      <button onclick="mudarMes(-1)">⬅️</button>
+      <span id="mesAtual">Abril 2025</span>
+      <button onclick="mudarMes(1)">➡️</button>
+    </section>
+    
 
-          <label for="diasTrem">Dias com trem para Novahuny:</label>
-          <input type="text" id="diasTrem" value="segunda,quarta,sexta" />
 
-          <label for="horaTrem">Hora do trem:</label>
-          <input type="time" id="horaTrem" value="12:00" />
+    <section class="contas">
+      <h2>Contas do Mês</h2>
+      <input type="text" id="contaNome" placeholder="Nome da Conta">
+      <input type="number" id="contaValor" placeholder="Valor (R$)">
+      <input type="date" id="contaData"> <!-- Calendário para data -->
+      <button onclick="adicionarConta()">Adicionar Conta</button>
+      <ul id="listaContas"></ul>
+    </section>
 
-          <label for="duracaoTrem">Duração do trem (em horas):</label>
-          <input type="number" id="duracaoTrem" value="6" min="1"/>
+    <section class="resumo">
+      <h2>Resumo do Mês</h2>
+      <p>Total Recebido: R$ <span id="totalRecebido">0</span></p>
+      <p>Total de Contas: R$ <span id="totalContas">0</span></p>
+      <p><strong>Saldo Previsto: R$ <span id="saldoPrevisto">0</span></strong></p>
+    </section>
+  </div>
 
-          <label for="nascerSol">Nascer do Sol na Transilvânia:</label>
-          <input type="time" id="nascerSol" value="09:00" />
-
-          <label for="porSol">Pôr do Sol na Transilvânia:</label>
-          <input type="time" id="porSol" value="17:30" />
-
-          <label for="velocidadeCaminhada">Velocidade da caminhada (km/h):</label>
-          <input type="number" id="velocidadeCaminhada" value="7" />
-
-          <label for="distanciaCastelo">Distância até o castelo (km):</label>
-          <input type="number" id="distanciaCastelo" value="14" />
-          
-          <div class="nav-buttons">
-            <button onclick="voltarParaIntro()" id="btnVoltarFinal" style="margin-bottom: 1rem;">⬅ Voltar</button>
-            <button onclick="gerarMissao()" id="btnGerarMissao">Gerar Missão</button>
-          </div>
-          
-          <pre id="resultado"></pre>
-          <p id="horaChegada">Hora de chegada ao castelo: </p> <!-- Exibir hora de chegada aqui -->
-        </div>
-
-    </div>
-
-  <script src="dracula.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
