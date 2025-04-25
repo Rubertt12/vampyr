@@ -264,3 +264,42 @@ function resetarValoresSalarioExtras() {
     document.getElementById('extraValor').value = '';
   }
 }
+
+
+
+function salvarNoBackend() {
+  const salario = { salario15, salario30, extras };
+  const dados = {
+    ano: anoAtual,
+    mes: mesAtual,
+    salario
+  };
+
+  fetch('http://localhost/salvar_salarios.php', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(dados),
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('Dados salvos com sucesso:', data);
+  })
+  .catch((error) => {
+    console.error('Erro ao salvar os dados:', error);
+  });
+}
+
+
+function carregarSalarios() {
+  fetch('http://localhost/recuperar_salarios.php')
+    .then(response => response.json())
+    .then(data => {
+      console.log('Dados recuperados:', data);
+      // Aqui você pode usar os dados para preencher os campos ou exibir informações
+    })
+    .catch((error) => {
+      console.error('Erro ao carregar os dados:', error);
+    });
+}
