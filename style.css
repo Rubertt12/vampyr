@@ -6,14 +6,128 @@ body {
   color: #333;
 }
 
+
+/* SEÇÃO DE SALÁRIOS */
+.salarios {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+.salarios h2 {
+  text-align: center;
+  font-size: 1.8rem;
+  color: #2c3e50;
+  margin-bottom: 1rem;
+}
+
+.salarios div {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Duas colunas */
+  gap: 15px; /* Espaçamento entre os campos */
+  /* max-width: 800px;
+  margin: auto; */
+}
+
+
+
+.salarios .entrada-salario {
+  display: collumn;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.salarios input[type="text"],
+.salarios input[type="number"] {
+  flex: 1 1 200px;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  background-color: #ecf0f1;
+  transition: all 0.3s ease;
+  max-width: 300px;
+}
+
+.salarios button {
+  background: #2980b9;
+  color: white;
+  cursor: pointer;
+  border: none;
+  font-weight: 1000;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.salarios button:hover {
+  background-color: #3498db;
+}
+
+.salarios button:active {
+  transform: translateY(0);
+}
+
+.lista-salarios {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 1rem;
+}
+
+.lista-salarios li {
+  background: #ecf0f1;
+  border-radius: 8px;
+  padding: 0.8rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.lista-salarios li:hover {
+  background-color: #d5dbdb;
+}
+
+.lista-salarios button {
+  background-color: #c0392b;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.lista-salarios button:hover {
+  background-color: #e74c3c;
+  transform: scale(1.05);
+}
+
+.lista-salarios button:active {
+  transform: scale(1);
+}
+
+
 .container {
-  max-width: 700px;
+  max-width: 1200px;
   margin: 2rem auto;
   padding: 2rem;
   background: white;
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   border: 2px solid #030303;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+}
+
+.container > * {
+  flex: 1 1 auto;
 }
 
 h1, h2 {
@@ -69,6 +183,52 @@ button:active {
   transform: translateY(0);
 }
 
+/* Calendário */
+.calendario {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.calendario button {
+  background-color: #2980b9;
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 0.6rem 1rem;
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.calendario button:hover {
+  background-color: #3498db;
+  transform: scale(1.1);
+}
+
+.calendario button:active {
+  transform: scale(1);
+}
+
+.calendario #mesAtual {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #2c3e50;
+  min-width: 120px;
+  text-align: center;
+}
+
+/* Lista */
 ul {
   list-style: none;
   padding-left: 0;
@@ -83,58 +243,85 @@ li {
   justify-content: space-between;
   align-items: center;
   transition: background-color 0.3s ease;
+  flex-wrap: wrap;
 }
 
 li:hover {
   background: #d5dbdb;
 }
 
-/* Estilo do botão de apagar */
 li button {
-  font-size: 12px; /* Menor tamanho para o 'X' */
-  padding: 4px 6px; /* Menos padding para tornar o botão mais compacto */
+  font-size: 12px;
+  padding: 4px 6px;
   background: #000000;
   color: white;
   border-radius: 6px;
   border: none;
   cursor: pointer;
   transition: background-color 0.2s ease, transform 0.2s ease;
-  display: flex; /* Garantir que o botão tenha tamanho adequado */
+  display: flex;
   justify-content: center;
   align-items: center;
-  width: auto; /* Tamanho automático para o botão */
 }
 
 li button:hover {
-  background: #000000; /* Cor de fundo mais escura no hover */
-  transform: scale(1.1); /* Leve aumento de tamanho no hover */
+  background: #000000;
+  transform: scale(1.1);
 }
 
 li button:active {
-  transform: scale(1); /* Volta ao tamanho normal quando pressionado */
+  transform: scale(1);
 }
 
-/* Responsividade para telas menores */
-@media (max-width: 768px) {
+/* Agrupamento de inputs */
+.container input[type="number"] {
+  display: inline-block;
+  width: calc(25% - 1rem);
+  margin-right: 1rem;
+}
+
+.container input[type="number"]:nth-child(4n) {
+  margin-right: 0;
+}
+
+/* -------------------- RESPONSIVIDADE -------------------- */
+@media (max-width: 992px) {
   .container {
     padding: 1.5rem;
-    max-width: 90%;
   }
 
-  h1, h2 {
-    font-size: 1.8rem;
+  .container input[type="number"] {
+    width: calc(50% - 1rem);
   }
 
-  input, button {
-    padding: 1rem;
-    font-size: 1.1rem;
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.6rem;
+  }
+
+  .calendario button {
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+  }
+
+  .calendario #mesAtual {
+    font-size: 1rem;
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
   .container {
+    margin: 1rem;
     padding: 1rem;
-    max-width: 95%;
+  }
+
+  .container input[type="number"] {
+    width: 100%;
+    margin-right: 0;
   }
 
   h1 {
@@ -142,16 +329,66 @@ li button:active {
   }
 
   h2 {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
   }
 
   input, button {
-    padding: 1.2rem;
+    font-size: 0.95rem;
+    padding: 0.6rem 1rem;
+  }
+
+  .calendario {
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .calendario #mesAtual {
+    padding: 0.3rem 1rem;
+    font-size: 1rem;
+  }
+
+  li {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  li button {
+    align-self: flex-end;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.4rem;
+  }
+
+  h2 {
     font-size: 1.2rem;
   }
 
-  button {
-    font-size: 1.1rem;
-    padding: 1rem;
+  input, button {
+    font-size: 0.9rem;
+    padding: 0.5rem 0.8rem;
+  }
+
+  .calendario button {
+    width: 32px;
+    height: 32px;
+    font-size: 0.9rem;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .salarios .entrada-salario {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .salarios input,
+  .salarios button {
+    width: 100%;
+    max-width: none;
   }
 }
