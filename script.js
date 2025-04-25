@@ -112,14 +112,21 @@ function renderizarSalarios() {
 function carregarDados() {
   // Carrega os dados do mês atual
   const dadosMes = JSON.parse(localStorage.getItem('salario-' + anoAtual + '-' + mesAtual)) || {};
-  salario01 = dadosMes.salario01 || 0;  // Certifique-se de que esses valores existem no localStorage
-  salario05 = dadosMes.salario05 || 0;
-  salario15 = dadosMes.salario15 || 0;
-  salario30 = dadosMes.salario30 || 0;
+  salario01 = formatarMoeda(dadosMes.salario01 ||  0);  // Formatar com cifrão
+  salario05 = formatarMoeda(dadosMes.salario05 || 0);
+  salario15 = formatarMoeda(dadosMes.salario15 || 0);
+  salario30 = formatarMoeda(dadosMes.salario30 || 0);
   extras = dadosMes.extras || [];
   contas = JSON.parse(localStorage.getItem('contas')) || {};
-
-  console.log(dadosMes);  // Verifique os dados carregados
+  
+  // Função para formatar valores como moeda com cifrão
+  function formatarMoeda(valor) {
+    return valor.toLocaleString('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+    });
+  }
+  
 
   document.getElementById('salario01').value = salario01;
   document.getElementById('salario05').value = salario05;
