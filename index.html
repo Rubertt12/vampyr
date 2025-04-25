@@ -10,10 +10,20 @@
   <div class="container">
     <h1>💰 Controle de Finanças</h1>
 
+    
+    
+    
+    
+    
     <section class="salarios">
       <h2>Salário Quinzenal</h2>
       <div>
+        <label>Dia 01: R$ <input type="number" id="salario01"></label>
+      
+        <label>Dia 05: R$ <input type="number" id="salario05"></label>
+       
         <label>Dia 15: R$ <input type="number" id="salario15"></label>
+       
         <label>Dia 30: R$ <input type="number" id="salario30"></label>
         
         <button onclick="salvarSalarios()">Salvar Salários</button>
@@ -50,6 +60,7 @@
       <input type="date" id="contaData"> <!-- Calendário para data -->
       <button onclick="adicionarConta()">Adicionar Conta</button>
       <ul id="listaContas"></ul>
+      <div id="navegacaoPaginacao"></div>  <!-- Aqui serão exibidos os botões de navegação -->
     </section>
 
     <section class="resumo">
@@ -60,12 +71,6 @@
     </section>
 
 
-    <section class="calendario">
-      <h2>Calendário</h2>
-      <button onclick="mudarMes(-1)">⬅️</button>
-      <span id="mesAtual">Abril 2025</span>
-      <button onclick="mudarMes(1)">➡️</button>
-    </section>
 
 
 

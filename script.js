@@ -1,3 +1,5 @@
+let salario01 = 0;
+let salario05 = 0;
 let salario15 = 0;
 let salario30 = 0;
 let extras = [];
@@ -30,19 +32,23 @@ function mudarMes(quantidade) {
     anoAtual++;      
   }
 
-  // Resetar os valores de salário e extras ao mudar o mês
-  resetarValoresSalarioExtras();
-
   renderizarCalendario();
+  carregarDados();  // Carrega os dados do mês específico
+  resetarValoresSalarioExtras();  // Zera os valores de salário e extras
+  renderizarSalarios();  // Atualiza a lista de salários
   renderizarContasMes();
   atualizarResumo();
 }
 
 function resetarValoresSalarioExtras() {
+  salario01 = 0;
+  salario05 = 0;
   salario15 = 0;
   salario30 = 0;
   extras = [];
   // Limpa os campos de entrada de salário e extras
+  document.getElementById('salario01').value = '';
+  document.getElementById('salario05').value = '';
   document.getElementById('salario15').value = '';
   document.getElementById('salario30').value = '';
   document.getElementById('extraNome').value = '';
@@ -50,10 +56,12 @@ function resetarValoresSalarioExtras() {
 }
 
 function salvarSalarios() {
+  salario01 = parseFloat(document.getElementById('salario01').value) || 0;
+  salario05 = parseFloat(document.getElementById('salario05').value) || 0;
   salario15 = parseFloat(document.getElementById('salario15').value) || 0;
   salario30 = parseFloat(document.getElementById('salario30').value) || 0;
   salvarNoStorage();
-  renderizarSalarios();  // Agora vai atualizar a lista de salários
+  renderizarSalarios();  // Atualiza a lista de salários
   atualizarResumo();
 }
 
@@ -91,41 +99,36 @@ function adicionarConta() {
   renderizarContasMes();
   atualizarResumo();
 }
-
 // Renderiza a lista de salários
 function renderizarSalarios() {
   const lista = document.getElementById('listaSalarios');
   lista.innerHTML = '';
   
-  const salarioTotal = salario15 + salario30;
+  const salarioTotal = salario01 + salario05 + salario15 + salario30;  // Agora inclui todos os salários
   const li = document.createElement('li');
-  li.innerHTML = `Salário 15: R$ ${salario15.toFixed(2)} | Salário 30: R$ ${salario30.toFixed(2)} | Total: R$ ${salarioTotal.toFixed(2)}`;
+  li.innerHTML = `Salário 01: R$ ${salario01.toFixed(2)} | Salário 05: R$ ${salario05.toFixed(2)} | Salário 15: R$ ${salario15.toFixed(2)} | Salário 30: R$ ${salario30.toFixed(2)} | Total: R$ ${salarioTotal.toFixed(2)}`;
   lista.appendChild(li);
 }
-
-// Modifica a função salvarSalarios para chamar renderizarSalarios
-function salvarSalarios() {
-  salario15 = parseFloat(document.getElementById('salario15').value) || 0;
-  salario30 = parseFloat(document.getElementById('salario30').value) || 0;
-  salvarNoStorage();
-  renderizarSalarios();  // Agora vai atualizar a lista de salários
-  atualizarResumo();
-}
-
 function carregarDados() {
   // Carrega os dados do mês atual
-  const dadosMes = JSON.parse(localStorage.getItem('mes_' + mesAtual)) || {};
+  const dadosMes = JSON.parse(localStorage.getItem('salario-' + anoAtual + '-' + mesAtual)) || {};
+  salario01 = dadosMes.salario01 || 0;  // Certifique-se de que esses valores existem no localStorage
+  salario05 = dadosMes.salario05 || 0;
   salario15 = dadosMes.salario15 || 0;
   salario30 = dadosMes.salario30 || 0;
   extras = dadosMes.extras || [];
-  contas = dadosMes.contas || {};
+  contas = JSON.parse(localStorage.getItem('contas')) || {};
 
+  console.log(dadosMes);  // Verifique os dados carregados
+
+  document.getElementById('salario01').value = salario01;
+  document.getElementById('salario05').value = salario05;
   document.getElementById('salario15').value = salario15;
   document.getElementById('salario30').value = salario30;
   
   renderizarExtras();
   renderizarContasMes();
-  renderizarSalarios();  // Atualiza a lista de salários na carga dos dados
+  renderizarSalarios();  // Atualiza a lista de salários ao carregar os dados
 }
 
 function renderizarExtras() {
@@ -152,7 +155,7 @@ function renderizarContasMes() {
 
 function atualizarResumo() {
   const totalExtras = extras.reduce((s, e) => s + e.valor, 0);
-  const totalReceitas = salario15 + salario30 + totalExtras;
+  const totalReceitas = salario01 + salario05 + salario15 + salario30 + totalExtras;
   const totalContas = (contas[mesAtual] || []).reduce((s, c) => s + c.valor, 0);
   const saldo = totalReceitas - totalContas;
 
@@ -175,13 +178,15 @@ function atualizarResumo() {
 
 function salvarNoStorage() {
   const dadosMes = {
+    salario01,
+    salario05,
     salario15,
     salario30,
-    extras,
-    contas
+    extras
   };
 
-  localStorage.setItem('mes_' + mesAtual, JSON.stringify(dadosMes));
+  localStorage.setItem('salario-' + anoAtual + '-' + mesAtual, JSON.stringify(dadosMes));
+  localStorage.setItem('contas', JSON.stringify(contas));  // Mantém contas separadas para todos os meses
 }
 
 function removerExtra(id) {
@@ -197,78 +202,9 @@ function removerConta(id, mes) {
   renderizarContasMes();
   atualizarResumo();
 }
-function mudarMes(quantidade) {
-  mesAtual += quantidade;  // Modifica o mês baseado na quantidade
-
-  if (mesAtual < 0) { 
-    mesAtual = 11;   
-    anoAtual--;      
-  } else if (mesAtual > 11) { 
-    mesAtual = 0;    
-    anoAtual++;      
-  }
-
-  renderizarCalendario();
-  resetarValoresSalarioExtras();  // Zera os valores de salário e extras
-  renderizarSalarios();  // Atualiza a lista de salários
-  renderizarContasMes();
-  atualizarResumo();
-}
-
-function salvarNoStorage() {
-  const salario = { salario15, salario30, extras };  // Armazena dados por mês
-  localStorage.setItem(`salario-${anoAtual}-${mesAtual}`, JSON.stringify(salario));  // Salva os dados de salário por mês
-  localStorage.setItem('contas', JSON.stringify(contas));  // Mantém contas separadas para todos os meses
-}
-
-function carregarDados() {
-  const salario = JSON.parse(localStorage.getItem(`salario-${anoAtual}-${mesAtual}`)) || { salario15: 0, salario30: 0, extras: [] };
-  salario15 = salario.salario15;
-  salario30 = salario.salario30;
-  extras = salario.extras;
-
-  document.getElementById('salario15').value = salario15;
-  document.getElementById('salario30').value = salario30;
-
-  renderizarExtras();
-  renderizarContasMes();
-  renderizarSalarios();  // Atualiza a lista de salários ao carregar os dados
-}
-
-
-function mudarMes(quantidade) {
-  mesAtual += quantidade;  // Modifica o mês baseado na quantidade
-
-  if (mesAtual < 0) { 
-    mesAtual = 11;   
-    anoAtual--;      
-  } else if (mesAtual > 11) { 
-    mesAtual = 0;    
-    anoAtual++;      
-  }
-
-  renderizarCalendario();
-  carregarDados();  // Carrega os dados do mês específico
-  renderizarSalarios();  // Atualiza a lista de salários
-  renderizarContasMes();
-  atualizarResumo();
-}
-function resetarValoresSalarioExtras() {
-  if (!localStorage.getItem(`salario-${anoAtual}-${mesAtual}`)) {
-    salario15 = 0;
-    salario30 = 0;
-    extras = [];
-    document.getElementById('salario15').value = '';
-    document.getElementById('salario30').value = '';
-    document.getElementById('extraNome').value = '';
-    document.getElementById('extraValor').value = '';
-  }
-}
-
-
 
 function salvarNoBackend() {
-  const salario = { salario15, salario30, extras };
+  const salario = {salario01, salario05, salario15, salario30, extras };
   const dados = {
     ano: anoAtual,
     mes: mesAtual,
@@ -283,23 +219,54 @@ function salvarNoBackend() {
     body: JSON.stringify(dados),
   })
   .then(response => response.json())
-  .then(data => {
-    console.log('Dados salvos com sucesso:', data);
-  })
-  .catch((error) => {
-    console.error('Erro ao salvar os dados:', error);
+  .then(data => console.log('Salvo com sucesso!', data))
+  .catch(error => console.error('Erro ao salvar:', error));
+}
+console.log(localStorage.getItem('salario-' + anoAtual + '-' + mesAtual));
+
+
+let paginaAtual = 0;
+const contasPorPagina = 3;
+
+function renderizarContasMes() {
+  const lista = document.getElementById('listaContas');
+  lista.innerHTML = '';
+  
+  const contasMes = contas[mesAtual] || [];
+
+  // Dividindo as contas em páginas de 3
+  const totalPaginas = Math.ceil(contasMes.length / contasPorPagina);
+  
+  // Pega as contas da página atual
+  const contasPaginaAtual = contasMes.slice(paginaAtual * contasPorPagina, (paginaAtual + 1) * contasPorPagina);
+  
+  // Exibe as contas da página atual
+  contasPaginaAtual.forEach((c) => {
+    const li = document.createElement('li');
+    li.innerHTML = `${c.nome} (venc. ${c.data}): R$ ${c.valor.toFixed(2)} <button onclick="removerConta(${c.id}, ${mesAtual})">❌</button>`;
+    lista.appendChild(li);
   });
+  
+  // Exibe os botões de navegação de página
+  const navegação = document.getElementById('navegacaoPaginacao');
+  navegação.innerHTML = ''; // Limpa os botões de navegação existentes
+  
+  if (paginaAtual > 0) {
+    const anteriorButton = document.createElement('button');
+    anteriorButton.textContent = 'Página Anterior';
+    anteriorButton.onclick = () => mudarPagina(-1);
+    navegação.appendChild(anteriorButton);
+  }
+  
+  if (paginaAtual < totalPaginas - 1) {
+    const proximaButton = document.createElement('button');
+    proximaButton.textContent = 'Próxima Página';
+    proximaButton.onclick = () => mudarPagina(1);
+    navegação.appendChild(proximaButton);
+  }
 }
 
-
-function carregarSalarios() {
-  fetch('http://localhost/recuperar_salarios.php')
-    .then(response => response.json())
-    .then(data => {
-      console.log('Dados recuperados:', data);
-      // Aqui você pode usar os dados para preencher os campos ou exibir informações
-    })
-    .catch((error) => {
-      console.error('Erro ao carregar os dados:', error);
-    });
+function mudarPagina(quantidade) {
+  paginaAtual += quantidade;
+  renderizarContasMes();
 }
