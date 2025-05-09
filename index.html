@@ -20,6 +20,12 @@
     
     <section class="salarios">
       <h2>Salário Mensal ou Quinzenal</h2>
+      <button onclick="gerarPDFRelatorio()">📄 Gerar Nota Fiscal</button>
+
+      
+
+
+
       <div>
         <label>Dia 01: R$ <input type="number" id="salario01" ></label>
       
@@ -60,8 +66,13 @@
       <h2>Contas do Mês</h2>
       <input type="text" id="contaNome" placeholder="Nome da Conta">
       <input type="number" id="contaValor" placeholder="Valor (R$)">
-      <input type="date" id="contaData"  value="01-06-2025" placeholder="Calendario"> <!-- Calendário para data -->
-      <button onclick="adicionarConta()">Adicionar Conta</button>
+   <input type="date" id="contaData" value="2025-06-01">
+
+
+
+<button onclick="adicionarConta()">Adicionar Conta</button>
+
+
       <br>
       <h2>Lista</h2>
       <ul id="listaContas"></ul>
@@ -82,6 +93,8 @@
   </div>
 
   
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
   <script src="script.js"></script>
   <script>

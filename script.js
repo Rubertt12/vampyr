@@ -286,3 +286,71 @@ function mudarPagina(quantidade) {
   paginaAtual += quantidade;
   renderizarContasMes();
 }
+
+async function gerarPDFRelatorio() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  const nomeMes = new Date(anoAtual, mesAtual).toLocaleString('default', { month: 'long', year: 'numeric' });
+
+  doc.setFontSize(18);
+  doc.text(`Nota Fiscal - ${nomeMes}`, 10, 20);
+
+  doc.setFontSize(12);
+  doc.text('Salários:', 10, 30);
+  doc.text(`• Salário 01: R$ ${salario01.toFixed(2)}`, 10, 38);
+  doc.text(`• Salário 05: R$ ${salario05.toFixed(2)}`, 10, 46);
+  doc.text(`• Salário 15: R$ ${salario15.toFixed(2)}`, 10, 54);
+  doc.text(`• Salário 30: R$ ${salario30.toFixed(2)}`, 10, 62);
+  const totalSalarios = salario01 + salario05 + salario15 + salario30;
+  doc.text(`Total Salários: R$ ${totalSalarios.toFixed(2)}`, 10, 70);
+
+  doc.text('Extras:', 10, 82);
+  let y = 90;
+  let totalExtras = 0;
+  extras.forEach(extra => {
+    doc.text(`• ${extra.nome}: R$ ${extra.valor.toFixed(2)}`, 10, y);
+    y += 8;
+    totalExtras += extra.valor;
+  });
+
+  if (extras.length === 0) {
+    doc.text('• Nenhum extra registrado.', 10, y);
+    y += 8;
+  }
+
+  doc.text(`Total Extras: R$ ${totalExtras.toFixed(2)}`, 10, y);
+  y += 12;
+
+  const contasMes = contas[mesAtual] || [];
+  doc.text('Contas:', 10, y);
+  y += 8;
+  let totalContas = 0;
+  contasMes.forEach(conta => {
+    doc.text(`• ${conta.nome} (${conta.data}): R$ ${conta.valor.toFixed(2)}`, 10, y);
+    y += 8;
+    totalContas += conta.valor;
+  });
+
+  if (contasMes.length === 0) {
+    doc.text('• Nenhuma conta registrada.', 10, y);
+    y += 8;
+  }
+
+  y += 10;
+  const saldo = totalSalarios + totalExtras - totalContas;
+  doc.setFontSize(14);
+  doc.text(`Resumo do mês:`, 10, y);
+  y += 8;
+  doc.setFontSize(12);
+  doc.text(`• Total Recebido: R$ ${(totalSalarios + totalExtras).toFixed(2)}`, 10, y);
+  y += 8;
+  doc.text(`• Total Contas: R$ ${totalContas.toFixed(2)}`, 10, y);
+  y += 8;
+  doc.text(`• Saldo Final: R$ ${saldo.toFixed(2)}`, 10, y);
+
+  doc.save(`Nota-Fiscal-${nomeMes.replace(' ', '-')}.pdf`);
+}
+
+
+
