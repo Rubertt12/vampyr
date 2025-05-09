@@ -292,65 +292,144 @@ async function gerarPDFRelatorio() {
   const doc = new jsPDF();
 
   const nomeMes = new Date(anoAtual, mesAtual).toLocaleString('default', { month: 'long', year: 'numeric' });
+  const dataHoje = new Date().toLocaleDateString();
 
+  let y = 20;
+
+  // === Cabeçalho ===
   doc.setFontSize(18);
-  doc.text(`Nota Fiscal - ${nomeMes}`, 10, 20);
+  doc.setTextColor(40, 40, 40);
+  doc.setFont('helvetica', 'bold');
+  doc.text(`Relatório Financeiro - ${nomeMes}`, 105, y, { align: 'center' });
 
-  doc.setFontSize(12);
-  doc.text('Salários:', 10, 30);
-  doc.text(`• Salário 01: R$ ${salario01.toFixed(2)}`, 10, 38);
-  doc.text(`• Salário 05: R$ ${salario05.toFixed(2)}`, 10, 46);
-  doc.text(`• Salário 15: R$ ${salario15.toFixed(2)}`, 10, 54);
-  doc.text(`• Salário 30: R$ ${salario30.toFixed(2)}`, 10, 62);
-  const totalSalarios = salario01 + salario05 + salario15 + salario30;
-  doc.text(`Total Salários: R$ ${totalSalarios.toFixed(2)}`, 10, 70);
+  y += 10;
+  doc.setFontSize(10);
+  doc.setTextColor(100);
+  doc.setFont('helvetica', 'italic');
+  doc.text(`Gerado em: ${dataHoje}`, 10, y);
 
-  doc.text('Extras:', 10, 82);
-  let y = 90;
-  let totalExtras = 0;
-  extras.forEach(extra => {
-    doc.text(`• ${extra.nome}: R$ ${extra.valor.toFixed(2)}`, 10, y);
-    y += 8;
-    totalExtras += extra.valor;
+  y += 5;
+  doc.setDrawColor(180);
+  doc.line(10, y, 200, y);
+  y += 10;
+
+  // === Seção: Salários ===
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(13);
+  doc.setTextColor(33, 97, 140);
+  doc.text('Salários', 10, y);
+  y += 8;
+
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(11);
+  doc.setTextColor(50);
+
+  const salarios = [
+    { label: 'Salário 01', valor: salario01 },
+    { label: 'Salário 05', valor: salario05 },
+    { label: 'Salário 15', valor: salario15 },
+    { label: 'Salário 30', valor: salario30 }
+  ];
+
+  salarios.forEach(s => {
+    doc.text(`• ${s.label}`, 15, y);
+    doc.text(`R$ ${s.valor.toFixed(2)}`, 180, y, { align: 'right' });
+    y += 7;
   });
+
+  const totalSalarios = salario01 + salario05 + salario15 + salario30;
+  doc.setFont('helvetica', 'bold');
+  doc.text('Total Salários:', 15, y);
+  doc.text(`R$ ${totalSalarios.toFixed(2)}`, 180, y, { align: 'right' });
+  y += 10;
+
+  // === Seção: Extras ===
+  doc.setFont('helvetica', 'bold');
+  doc.setTextColor(33, 97, 140);
+  doc.text('Extras', 10, y);
+  y += 8;
+
+  doc.setFont('helvetica', 'normal');
+  doc.setTextColor(50);
+  let totalExtras = 0;
 
   if (extras.length === 0) {
-    doc.text('• Nenhum extra registrado.', 10, y);
-    y += 8;
+    doc.text('• Nenhum extra registrado.', 15, y);
+    y += 7;
+  } else {
+    extras.forEach(extra => {
+      doc.text(`• ${extra.nome}`, 15, y);
+      doc.text(`R$ ${extra.valor.toFixed(2)}`, 180, y, { align: 'right' });
+      y += 7;
+      totalExtras += extra.valor;
+    });
   }
 
-  doc.text(`Total Extras: R$ ${totalExtras.toFixed(2)}`, 10, y);
-  y += 12;
+  doc.setFont('helvetica', 'bold');
+  doc.text('Total Extras:', 15, y);
+  doc.text(`R$ ${totalExtras.toFixed(2)}`, 180, y, { align: 'right' });
+  y += 10;
 
-  const contasMes = contas[mesAtual] || [];
-  doc.text('Contas:', 10, y);
+  // === Seção: Contas ===
+  doc.setFont('helvetica', 'bold');
+  doc.setTextColor(33, 97, 140);
+  doc.text('Contas', 10, y);
   y += 8;
+
+  doc.setFont('helvetica', 'normal');
+  doc.setTextColor(50);
+  const contasMes = contas[mesAtual] || [];
   let totalContas = 0;
-  contasMes.forEach(conta => {
-    doc.text(`• ${conta.nome} (${conta.data}): R$ ${conta.valor.toFixed(2)}`, 10, y);
-    y += 8;
-    totalContas += conta.valor;
-  });
 
   if (contasMes.length === 0) {
-    doc.text('• Nenhuma conta registrada.', 10, y);
-    y += 8;
+    doc.text('• Nenhuma conta registrada.', 15, y);
+    y += 7;
+  } else {
+    contasMes.forEach(conta => {
+      doc.text(`• ${conta.nome} (${conta.data})`, 15, y);
+      doc.text(`R$ ${conta.valor.toFixed(2)}`, 180, y, { align: 'right' });
+      y += 7;
+      totalContas += conta.valor;
+    });
   }
 
   y += 10;
+
+  // === Resumo ===
   const saldo = totalSalarios + totalExtras - totalContas;
-  doc.setFontSize(14);
-  doc.text(`Resumo do mês:`, 10, y);
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(13);
+  doc.setTextColor(33, 97, 140);
+  doc.text('Resumo do Mês', 10, y);
   y += 8;
-  doc.setFontSize(12);
-  doc.text(`• Total Recebido: R$ ${(totalSalarios + totalExtras).toFixed(2)}`, 10, y);
-  y += 8;
-  doc.text(`• Total Contas: R$ ${totalContas.toFixed(2)}`, 10, y);
-  y += 8;
-  doc.text(`• Saldo Final: R$ ${saldo.toFixed(2)}`, 10, y);
 
-  doc.save(`Nota-Fiscal-${nomeMes.replace(' ', '-')}.pdf`);
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(11);
+  doc.setTextColor(50);
+  doc.text('• Total Recebido:', 15, y);
+  doc.text(`R$ ${(totalSalarios + totalExtras).toFixed(2)}`, 180, y, { align: 'right' });
+  y += 7;
+
+  doc.text('• Total Contas:', 15, y);
+  doc.text(`R$ ${totalContas.toFixed(2)}`, 180, y, { align: 'right' });
+  y += 7;
+
+  doc.setFont('helvetica', 'bold');
+  doc.text('• Saldo Final:', 15, y);
+  doc.text(`R$ ${saldo.toFixed(2)}`, 180, y, { align: 'right' });
+
+  // === Rodapé ===
+  doc.setDrawColor(180);
+  doc.line(10, 280, 200, 280);
+
+  doc.setFontSize(10);
+  doc.setFont('helvetica', 'italic');
+  doc.setTextColor(100);
+  doc.text('Assinatura do responsável:', 15, 289);
+  doc.line(70, 288, 180, 288);
+
+  doc.setFont('helvetica', 'normal');
+  doc.text(`Página 1 de 1`, 200, 295, { align: 'right' });
+
+  doc.save(`Relatorio-${nomeMes.replace(' ', '-')}.pdf`);
 }
-
-
-

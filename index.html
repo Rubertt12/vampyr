@@ -7,11 +7,14 @@
   <link rel="stylesheet" href="style.css">
   <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#4caf50">
+<link rel="icon" type="image/x-icon" href="/gestao.ico">
 
 </head>
 <body>
   <div class="container">
     <h1>💰 Controle de Finanças</h1>
+
+    
 
     
     
@@ -20,7 +23,7 @@
     
     <section class="salarios">
       <h2>Salário Mensal ou Quinzenal</h2>
-      <button onclick="gerarPDFRelatorio()">📄 Gerar Nota Fiscal</button>
+      
 
       
 
@@ -55,15 +58,16 @@
 
     <section class="calendario">
       <h2>Meses</h2>
-      <button onclick="mudarMes(-1)">⬅️</button>
-      <span id="mesAtual">Abril 2025</span>
-      <button onclick="mudarMes(1)">➡️</button>
+      <div class="calendario-controles">
+        <button onclick="mudarMes(-1)">⬅️</button>
+        <span id="mesAtual"></span>
+        <button onclick="mudarMes(1)">➡️</button>
+      </div>
     </section>
-    
 
 
     <section class="contas">
-      <h2>Contas do Mês</h2>
+      <h1>Contas do Mês</h1>
       <input type="text" id="contaNome" placeholder="Nome da Conta">
       <input type="number" id="contaValor" placeholder="Valor (R$)">
    <input type="date" id="contaData" value="2025-06-01">
@@ -88,7 +92,7 @@
 
 
 
-
+    <button onclick="gerarPDFRelatorio()">📄 Gerar Nota Fiscal</button>
 
   </div>
 
