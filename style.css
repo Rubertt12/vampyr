@@ -251,17 +251,19 @@ li:hover {
 }
 
 li button {
+  width: 28px;
+  height: 28px;
   font-size: 12px;
-  padding: 4px 6px;
   background: #000000;
   color: white;
-  border-radius: 6px;
+  border-radius: 50%;
   border: none;
   cursor: pointer;
   transition: background-color 0.2s ease, transform 0.2s ease;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 0; 
 }
 
 li button:hover {
@@ -272,7 +274,6 @@ li button:hover {
 li button:active {
   transform: scale(1);
 }
-
 /* Agrupamento de inputs */
 .container input[type="number"] {
   display: inline-block;
