@@ -230,7 +230,46 @@ li button:hover {
   background: #333;
 }
 
-/* Responsivo ainda mais fluido */
+/* Responsivo para celulares menores (iPhone SE e similares) */
+@media (max-width: 375px) {
+  body {
+    padding: 1rem;
+  }
+
+  .container {
+    padding: 1rem;
+    gap: 1.5rem;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.6rem;
+  }
+
+  .entrada-salario {
+    flex-direction: column;
+  }
+
+  .calendario {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .salarios div {
+    grid-template-columns: 1fr;
+  }
+
+  .lista-salarios li {
+    flex-direction: column;
+    gap: 0.8rem;
+    align-items: flex-start;
+  }
+}
+
+/* Responsivo para telas médias (tablets e dispositivos maiores) */
 @media (max-width: 768px) {
   .container {
     padding: 1.5rem;
@@ -252,5 +291,24 @@ li button:hover {
 
   li button {
     align-self: flex-end;
+  }
+
+  h1 {
+    font-size: 2.2rem;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+  }
+}
+
+/* Responsivo para telas grandes (computadores e dispositivos maiores) */
+@media (min-width: 1200px) {
+  .container {
+    padding: 2.5rem;
+  }
+
+  .salarios div {
+    grid-template-columns: repeat(3, 1fr); /* Mais colunas para telas grandes */
   }
 }
