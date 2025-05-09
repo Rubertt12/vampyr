@@ -111,6 +111,8 @@ function renderizarSalarios() {
 }
 function carregarDados() {
   // Carrega os dados do mês atual do localStorage
+  
+  contas = JSON.parse(localStorage.getItem('contas')) || {};
   const dadosMes = JSON.parse(localStorage.getItem('salario-' + anoAtual + '-' + mesAtual));
 
   // Verifica se os dados para o mês e ano selecionados existem. Se não, inicializa os valores.
