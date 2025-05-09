@@ -1,395 +1,256 @@
-body {
-  font-family: 'Arial', sans-serif;
-  background: #f4f4f4;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+:root {
+  --bg-gradient: linear-gradient(135deg, #e0eafc, #cfdef3);
+  --glass-bg: rgba(255, 255, 255, 0.55);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --primary: #3a86ff;
+  --primary-dark: #265cc5;
+  --danger: #ef476f;
+  --danger-dark: #d42e55;
+  --text-color: #1a1a1a;
+  --text-light: #ffffff;
+  --neutral: #f8f9fa;
+  --neutral-dark: #dee2e6;
+  --shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+}
+
+* {
   margin: 0;
   padding: 0;
-  color: #333;
-}
-
-
-/* SEÇÃO DE SALÁRIOS */
-.salarios {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  margin-top: 2rem;
-}
-.salarios h2 {
-  text-align: center;
-  font-size: 1.8rem;
-  color: #2c3e50;
-  margin-bottom: 1rem;
-}
-
-.salarios div {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Duas colunas */
-  gap: 15px; /* Espaçamento entre os campos */
-  /* max-width: 800px;
-  margin: auto; */
-}
-
-
-
-.salarios .entrada-salario {
-  display: collumn;
-  gap: 1rem;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-}
-
-.salarios input[type="text"],
-.salarios input[type="number"] {
-  flex: 1 1 200px;
-  padding: 0.8rem 1rem;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
-  background-color: #ecf0f1;
-  transition: all 0.3s ease;
-  max-width: 300px;
-}
-
-.salarios button {
-  background: #2980b9;
-  color: white;
-  cursor: pointer;
-  border: none;
-  font-weight: 1000;
-  transition: background 0.3s ease, transform 0.2s ease;
-}
-
-.salarios button:hover {
-  background-color: #3498db;
-}
-
-.salarios button:active {
-  transform: translateY(0);
-}
-
-.lista-salarios {
-  list-style: none;
-  padding-left: 0;
-  margin-top: 1rem;
-}
-
-.lista-salarios li {
-  background: #ecf0f1;
-  border-radius: 8px;
-  padding: 0.8rem 1rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-weight: 500;
-  transition: background-color 0.3s ease;
-}
-
-.lista-salarios li:hover {
-  background-color: #d5dbdb;
-}
-
-.lista-salarios button {
-  background-color: #c0392b;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  padding: 4px 8px;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.lista-salarios button:hover {
-  background-color: #e74c3c;
-  transform: scale(1.05);
-}
-
-.lista-salarios button:active {
-  transform: scale(1);
-}
-
-
-.container {
-  max-width: 1200px;
-  margin: 2rem auto;
-  padding: 2rem;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  border: 2px solid #030303;
-
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  flex-wrap: wrap;
   box-sizing: border-box;
 }
 
-.container > * {
-  flex: 1 1 auto;
+body {
+  font-family: 'Poppins', sans-serif;
+  background: var(--bg-gradient);
+  color: var(--text-color);
+  line-height: 1.6;
+  min-height: 100vh;
+  padding: 2rem;
+  transition: all 0.3s ease;
+}
+
+.container {
+  max-width: 1150px;
+  margin: auto;
+  background: var(--glass-bg);
+  backdrop-filter: blur(14px);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  padding: 2.5rem;
+  border: 1px solid var(--glass-border);
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  animation: fadeInUp 0.6s ease-in-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 h1, h2 {
-  color: #2c3e50;
   text-align: center;
-  font-weight: 600;
-  margin-bottom: 1.5rem;
+  font-weight: 700;
+  color: var(--text-color);
 }
 
 h1 {
-  font-size: 2.5rem;
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
 }
 
 h2 {
-  font-size: 1.8rem;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
 }
 
 input, button {
-  margin: 0.5rem 0;
-  padding: 0.8rem 1.2rem;
-  border-radius: 8px;
-  border: 1px solid #ccc;
+  font-family: inherit;
   font-size: 1rem;
-  width: 100%;
-  box-sizing: border-box;
+  border-radius: 12px;
+  border: none;
+  padding: 0.8rem 1.2rem;
   transition: all 0.3s ease;
 }
 
-input:focus, button:focus {
-  outline: none;
-  border-color: #3498db;
+input {
+  background: var(--neutral);
+  border: 1px solid var(--neutral-dark);
 }
 
-input {
-  background-color: #ecf0f1;
+input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(58, 134, 255, 0.2);
 }
 
 button {
-  background: #2980b9;
-  color: white;
-  cursor: pointer;
-  border: none;
+  background: var(--primary);
+  color: var(--text-light);
   font-weight: 600;
-  transition: background 0.3s ease, transform 0.2s ease;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(58, 134, 255, 0.3);
 }
 
 button:hover {
-  background: #3498db;
+  background: var(--primary-dark);
   transform: translateY(-2px);
 }
 
 button:active {
-  transform: translateY(0);
+  transform: scale(0.97);
 }
 
-/* Calendário */
+.salarios {
+  display: flex;
+  flex-direction: column;
+  gap: 2.2rem;
+}
+
+.salarios div {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.2rem;
+}
+
+.entrada-salario {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.lista-salarios {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.lista-salarios li {
+  background: var(--neutral);
+  padding: 1rem 1.4rem;
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background 0.3s ease;
+}
+
+.lista-salarios li:hover {
+  background: var(--neutral-dark);
+}
+
+.lista-salarios button {
+  background: var(--danger);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  border-radius: 10px;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.lista-salarios button:hover {
+  background: var(--danger-dark);
+  transform: scale(1.05);
+}
+
 .calendario {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 1rem;
-  margin-bottom: 1.5rem;
   flex-wrap: wrap;
 }
 
 .calendario button {
-  background-color: #2980b9;
-  border: none;
-  color: white;
-  font-size: 1.2rem;
-  font-weight: bold;
-  padding: 0.6rem 1rem;
+  width: 44px;
+  height: 44px;
+  font-size: 1.1rem;
+  background: var(--primary);
+  color: var(--text-light);
   border-radius: 50%;
-  width: 42px;
-  height: 42px;
   display: flex;
-  justify-content: center;
   align-items: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  justify-content: center;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
 .calendario button:hover {
-  background-color: #3498db;
+  background: var(--primary-dark);
   transform: scale(1.1);
-}
-
-.calendario button:active {
-  transform: scale(1);
 }
 
 .calendario #mesAtual {
   font-size: 1.2rem;
   font-weight: 600;
-  color: #2c3e50;
-  min-width: 120px;
   text-align: center;
+  min-width: 120px;
 }
 
-/* Lista */
 ul {
   list-style: none;
-  padding-left: 0;
+  padding: 0;
 }
 
 li {
-  margin-bottom: 10px;
-  padding: 10px;
-  background: #ecf0f1;
-  border-radius: 8px;
+  background: var(--neutral);
+  padding: 0.8rem 1rem;
+  border-radius: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  transition: background-color 0.3s ease;
-  flex-wrap: wrap;
 }
 
 li:hover {
-  background: #d5dbdb;
+  background: var(--neutral-dark);
 }
 
 li button {
-  width: 28px;
-  height: 28px;
-  font-size: 12px;
-  background: #000000;
-  color: white;
-  border-radius: 50%;
+  background: #111;
+  color: #fff;
+  font-size: 0.8rem;
   border: none;
-  cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.2s ease;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
   display: flex;
-  justify-content: center;
   align-items: center;
-  padding: 0; 
+  justify-content: center;
 }
 
 li button:hover {
-  background: #000000;
-  transform: scale(1.1);
+  background: #333;
 }
 
-li button:active {
-  transform: scale(1);
-}
-/* Agrupamento de inputs */
-.container input[type="number"] {
-  display: inline-block;
-  width: calc(25% - 1rem);
-  margin-right: 1rem;
-}
-
-.container input[type="number"]:nth-child(4n) {
-  margin-right: 0;
-}
-
-/* -------------------- RESPONSIVIDADE -------------------- */
-@media (max-width: 992px) {
+/* Responsivo ainda mais fluido */
+@media (max-width: 768px) {
   .container {
     padding: 1.5rem;
   }
 
-  .container input[type="number"] {
-    width: calc(50% - 1rem);
-  }
-
-  h1 {
-    font-size: 2rem;
-  }
-
-  h2 {
-    font-size: 1.6rem;
-  }
-
-  .calendario button {
-    width: 36px;
-    height: 36px;
-    font-size: 1rem;
-  }
-
-  .calendario #mesAtual {
-    font-size: 1rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .container {
-    margin: 1rem;
-    padding: 1rem;
-  }
-
-  .container input[type="number"] {
-    width: 100%;
-    margin-right: 0;
-  }
-
-  h1 {
-    font-size: 1.6rem;
-  }
-
-  h2 {
-    font-size: 1.3rem;
-  }
-
-  input, button {
-    font-size: 0.95rem;
-    padding: 0.6rem 1rem;
+  .entrada-salario {
+    flex-direction: column;
   }
 
   .calendario {
     flex-direction: column;
-    gap: 0.6rem;
-  }
-
-  .calendario #mesAtual {
-    padding: 0.3rem 1rem;
-    font-size: 1rem;
   }
 
   li {
     flex-direction: column;
+    gap: 0.6rem;
     align-items: flex-start;
-    gap: 0.5rem;
   }
 
   li button {
     align-self: flex-end;
-  }
-}
-
-@media (max-width: 480px) {
-  h1 {
-    font-size: 1.4rem;
-  }
-
-  h2 {
-    font-size: 1.2rem;
-  }
-
-  input, button {
-    font-size: 0.9rem;
-    padding: 0.5rem 0.8rem;
-  }
-
-  .calendario button {
-    width: 32px;
-    height: 32px;
-    font-size: 0.9rem;
-  }
-}
-
-
-@media (max-width: 768px) {
-  .salarios .entrada-salario {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .salarios input,
-  .salarios button {
-    width: 100%;
-    max-width: none;
   }
 }

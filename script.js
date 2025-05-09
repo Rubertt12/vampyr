@@ -20,7 +20,6 @@ function renderizarCalendario() {
   document.getElementById('mesAtual').textContent = mesNome;
 }
 
-// Função para alterar o mês
 function mudarMes(quantidade) {
   mesAtual += quantidade;  // Modifica o mês baseado na quantidade
 
@@ -34,11 +33,12 @@ function mudarMes(quantidade) {
 
   renderizarCalendario();
   carregarDados();  // Carrega os dados do mês específico
-  resetarValoresSalarioExtras();  // Zera os valores de salário e extras
+  resetarValoresSalarioExtras();  // Zera os valores de salário e extras, se necessário
   renderizarSalarios();  // Atualiza a lista de salários
   renderizarContasMes();
   atualizarResumo();
 }
+
 
 function resetarValoresSalarioExtras() {
   salario01 = 0;
@@ -110,33 +110,35 @@ function renderizarSalarios() {
   lista.appendChild(li);
 }
 function carregarDados() {
-  // Carrega os dados do mês atual
-  const dadosMes = JSON.parse(localStorage.getItem('salario-' + anoAtual + '-' + mesAtual)) || {};
-  salario01 = formatarMoeda(dadosMes.salario01 ||  0);  // Formatar com cifrão
-  salario05 = formatarMoeda(dadosMes.salario05 || 0);
-  salario15 = formatarMoeda(dadosMes.salario15 || 0);
-  salario30 = formatarMoeda(dadosMes.salario30 || 0);
-  extras = dadosMes.extras || [];
-  contas = JSON.parse(localStorage.getItem('contas')) || {};
-  
-  // Função para formatar valores como moeda com cifrão
-  function formatarMoeda(valor) {
-    return valor.toLocaleString('pt-BR', {
-      style: 'currency',
-      currency: 'BRL',
-    });
-  }
-  
+  // Carrega os dados do mês atual do localStorage
+  const dadosMes = JSON.parse(localStorage.getItem('salario-' + anoAtual + '-' + mesAtual));
 
+  // Verifica se os dados para o mês e ano selecionados existem. Se não, inicializa os valores.
+  if (dadosMes) {
+    salario01 = dadosMes.salario01 || 0;
+    salario05 = dadosMes.salario05 || 0;
+    salario15 = dadosMes.salario15 || 0;
+    salario30 = dadosMes.salario30 || 0;
+    extras = dadosMes.extras || [];
+  } else {
+    salario01 = 0;
+    salario05 = 0;
+    salario15 = 0;
+    salario30 = 0;
+    extras = [];
+  }
+
+  // Atualiza os campos com os valores carregados
   document.getElementById('salario01').value = salario01;
   document.getElementById('salario05').value = salario05;
   document.getElementById('salario15').value = salario15;
   document.getElementById('salario30').value = salario30;
-  
+
   renderizarExtras();
   renderizarContasMes();
   renderizarSalarios();  // Atualiza a lista de salários ao carregar os dados
 }
+
 
 function renderizarExtras() {
   const lista = document.getElementById('listaExtras');
@@ -192,9 +194,14 @@ function salvarNoStorage() {
     extras
   };
 
+  // Salva os dados de salários no localStorage para o mês e ano específicos
   localStorage.setItem('salario-' + anoAtual + '-' + mesAtual, JSON.stringify(dadosMes));
-  localStorage.setItem('contas', JSON.stringify(contas));  // Mantém contas separadas para todos os meses
+  console.log('Dados salvos para ' + anoAtual + '-' + mesAtual, dadosMes);
+  
+  // Salva as contas, que são globais para todos os meses
+  localStorage.setItem('contas', JSON.stringify(contas));
 }
+
 
 function removerExtra(id) {
   extras = extras.filter(extra => extra.id !== id);
